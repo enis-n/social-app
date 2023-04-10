@@ -15,10 +15,11 @@ interface Props {
     closeForm: () => void;
     createOrEdit: (post: Post) => void;
     deletePost: (id: string) => void;
+    submitting: boolean;
 }
 
 export default function PostDashboard({ posts, selectedPost,
-    selectPost, cancelSelectPost, editMode, openForm, closeForm, createOrEdit, deletePost }: Props) {
+    selectPost, cancelSelectPost, editMode, openForm, closeForm, createOrEdit, deletePost, submitting }: Props) {
     return (
         <Grid>
             <Grid.Column width='10'>
@@ -26,6 +27,7 @@ export default function PostDashboard({ posts, selectedPost,
                     posts={posts}
                     selectPost={selectPost}
                     deletePost={deletePost}
+                    submitting={submitting}
                 />
             </Grid.Column>
             <Grid.Column width='6'>
@@ -36,7 +38,12 @@ export default function PostDashboard({ posts, selectedPost,
                         openForm={openForm}
                     />}
                 {editMode &&
-                    <PostForm closeForm={closeForm} post={selectedPost} createOrEdit={createOrEdit} />}
+                    <PostForm
+                        closeForm={closeForm}
+                        post={selectedPost}
+                        createOrEdit={createOrEdit}
+                        submitting={submitting}
+                    />}
             </Grid.Column>
         </Grid>
     )
