@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Card, Image } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store'
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { Link, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
-export default function PostDetails() {
+export default observer(function PostDetails() {
     const { postStore } = useStore();
-    const { selectedPost: post, openForm, cancelSelectedPost } = postStore;
+    const { selectedPost: post, loadPost, loadingInitial } = postStore;
+    const { id } = useParams<{ id: string }>();
 
-    if (!post) return <LoadingComponent content={''} />;
+    useEffect(() => {
+        if (id) loadPost(id);
+    }, [id, loadPost]);
+
+    if (loadingInitial || !post) return <LoadingComponent content={''} />;
 
     return (
         <Card fluid>
@@ -23,10 +30,10 @@ export default function PostDetails() {
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths='2'>
-                    <Button onClick={() => openForm(post.id)} basic color='blue' content='Edit' />
-                    <Button onClick={cancelSelectedPost} basic color='grey' content='Cancel' />
+                    <Button as={Link} to={`/manage/${post.id}`} basic color='blue' content='Edit' />
+                    <Button as={Link} to='/posts' basic color='grey' content='Cancel' />
                 </Button.Group>
             </Card.Content>
         </Card>
     )
-}
+})

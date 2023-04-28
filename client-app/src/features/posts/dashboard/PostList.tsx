@@ -2,6 +2,7 @@ import React, { SyntheticEvent, useState } from 'react'
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 
 export default observer(function PostList() {
     const { postStore } = useStore();
@@ -27,7 +28,7 @@ export default observer(function PostList() {
                                 <div>{post.venue}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => postStore.selectPost(post.id)} floated='right' content='View' color='blue' />
+                                <Button as={Link} to={`posts/${post.id}`} floated='right' content='View' color='blue' />
                                 <Button
                                     name={post.id}
                                     loading={loading && target === post.id}
