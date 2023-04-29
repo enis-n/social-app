@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store'
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import PostDetailedHeader from './PostDetailedHeader';
+import PostDetailedInfo from './PostDetailedInfo';
+import PostDetailedChat from './PostDetailedChat';
+import PostDetailedSidebar from './PostDetailedSidebar';
 
 export default observer(function PostDetails() {
     const { postStore } = useStore();
@@ -17,23 +21,15 @@ export default observer(function PostDetails() {
     if (loadingInitial || !post) return <LoadingComponent content={''} />;
 
     return (
-        <Card fluid>
-            <Image src={`/assets/categoryImages/${post.category}.jpg`} />
-            <Card.Content>
-                <Card.Header>{post.title}</Card.Header>
-                <Card.Meta>
-                    <span>{post.date}</span>
-                </Card.Meta>
-                <Card.Description>
-                    {post.description}
-                </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-                <Button.Group widths='2'>
-                    <Button as={Link} to={`/manage/${post.id}`} basic color='blue' content='Edit' />
-                    <Button as={Link} to='/posts' basic color='grey' content='Cancel' />
-                </Button.Group>
-            </Card.Content>
-        </Card>
+        <Grid>
+            <Grid.Column width={10}>
+                <PostDetailedHeader post={post} />
+                <PostDetailedInfo post={post} />
+                <PostDetailedChat />
+            </Grid.Column>
+            <Grid.Column width={6}>
+                <PostDetailedSidebar />
+            </Grid.Column>
+        </Grid>
     )
 })

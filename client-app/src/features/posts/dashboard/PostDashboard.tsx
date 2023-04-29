@@ -4,6 +4,7 @@ import PostList from './PostList';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
+import PostFilters from './PostFilters';
 
 export default observer(function PostDashboard() {
     const { postStore } = useStore();
@@ -22,7 +23,7 @@ export default observer(function PostDashboard() {
                 <PostList />
             </Grid.Column>
             <Grid.Column width='6'>
-                <h2>Post Filters</h2>
+                <PostFilters />
             </Grid.Column>
         </Grid>
     )
