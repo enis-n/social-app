@@ -10,5 +10,6 @@ namespace Persistence
         }
 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Story> Stories { get; set; }
     }
 }
