@@ -33,6 +33,16 @@ export default class JobStore {
     }
   };
 
+  get groupedJobs() {
+    return Object.entries(
+        this.jobsByDate.reduce((jobs, job) => {
+            const date = job.date;
+            jobs[date] = jobs[date] ? [...jobs[date], job] : [job]
+            return jobs;
+        }, {} as { [key: string]: Job[] })
+    )
+}
+
   loadJob = async (id: string) => {
     let job = this.getJob(id);
     if (job) {

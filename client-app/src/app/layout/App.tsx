@@ -8,6 +8,7 @@ import HomePage from '../../features/home/HomePage';
 import PostForm from '../../features/posts/form/PostForm';
 import PostDetails from '../../features/posts/details/PostDetails';
 import JobForm from '../../features/jobs/form/JobForm';
+import JobDashboard from '../../features/jobs/dashboard/JobDashboard';
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,9 @@ function App() {
             <Container style={{ marginTop: '7em' }}>
               <Route exact path='/posts' component={PostDashboard} />
               <Route path='/posts/:id' component={PostDetails} />
+
+              <Route exact path='/jobs' component={JobDashboard} />
+              {/* <Route path='/jobs/:id' component={JobDetails} /> */}
               <Route key={location.key} path={['/createPost', '/manage/:id']} component={PostForm} />
               <Route key={location.key} path={['/createJob','/manage/:id']} component={JobForm} />
             </Container>

@@ -11,6 +11,7 @@ export default function NavBar() {
                     UBT Social App
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/posts' name='Posts' />
+                <Menu.Item as={NavLink} to='/jobs' name='Jobs' />
                 <Menu.Item>
                     <Button as={NavLink} to='/createPost' positive content='Create Post' />
                 </Menu.Item>
