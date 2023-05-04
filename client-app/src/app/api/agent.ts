@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Post } from "../models/post";
+import { Job } from "../models/jobs";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -36,8 +37,16 @@ const Posts = {
     delete: (id: string) => axios.delete<void>(`/posts/${id}`)
 }
 
+const Jobs = {
+    list: () => request.get<Job[]>('/jobs'),
+    details: (id: string) => request.get<Job>(`/jobs/${id}`),
+    create: (job: Job) => axios.post<void>('/jobs', job),
+    update: (job: Job) => axios.put<void>(`/jobs/${job.id}`, job),
+    delete: (id: string) => axios.delete<void>(`/jobs/${id}`)
+}
+
 const agent = {
-    Posts
+    Posts, Jobs
 }
 
 export default agent;

@@ -1,12 +1,15 @@
 import { createContext, useContext } from "react";
 import PostStore from "./postStore";
+import JobStore from "./jobStore";
 
 interface Store {
-    postStore: PostStore
+    postStore: PostStore,
+    jobStore: JobStore,
 }
 
 export const store: Store = {
-    postStore: new PostStore()
+    postStore: new PostStore(),
+    jobStore: new JobStore(),
 }
 
 export const StoreContext = createContext(store);

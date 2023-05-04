@@ -14,6 +14,9 @@ export default function NavBar() {
                 <Menu.Item>
                     <Button as={NavLink} to='/createPost' positive content='Create Post' />
                 </Menu.Item>
+                <Menu.Item>
+                    <Button as={NavLink} to='/createJob' positive content='Create Job Post' />
+                </Menu.Item>
             </Container>
         </Menu>
     )
