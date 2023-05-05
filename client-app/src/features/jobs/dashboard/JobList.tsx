@@ -17,6 +17,7 @@ export default observer(function JobList() {
     date: "2023-05-01",
     location: "New York",
     salary: "600eur",
+    company:"X"
   };
 
   // Array of job objects

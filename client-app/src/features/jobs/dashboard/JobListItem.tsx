@@ -16,7 +16,7 @@ export default function PostListItem({ job }: Props) {
               <Item.Header as={Link} to={`/jobs/${job.id}`}>
                 {job.title}
               </Item.Header>
-              {/* <Item.Description>Company(to add company that is posting position)</Item.Description> */}
+              <Item.Description>{job.company}</Item.Description>
             </Item.Content>
           </Item>
         </Item.Group>

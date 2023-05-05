@@ -11,5 +11,6 @@ namespace Persistence
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Story> Stories { get; set; }
+        public DbSet<Job> Jobs { get; set; }
     }
 }

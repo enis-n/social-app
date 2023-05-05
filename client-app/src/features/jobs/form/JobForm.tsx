@@ -19,28 +19,28 @@ export default observer(function JobPostForm() {
   const { createJob, updateJob, loading, loadJob, loadingInitial } = jobStore;
   const { id } = useParams<{ id: string }>();
 
- interface JobOption {
-  key: string;
-  text: string;
-  value: string;
-  name: string;
-}
+  interface JobOption {
+    key: string;
+    text: string;
+    value: string;
+    name: string;
+  }
 
-const jobOptions: JobOption[] = [
-  {
-    key: "Front-end Dev",
-    text: "Front-end Dev",
-    value: "Front-end Dev",
-    name: "Front-end Dev",
-  },
-  {
-    key: "Back-end Dev",
-    text: "Back-end Dev",
-    value: "Back-end Dev",
-    name: "Back-end Dev",
-  },
-  { key: "DevOps", text: "DevOps", value: "DevOps", name: "DevOps" },
-];
+  const jobOptions: JobOption[] = [
+    {
+      key: "Front-end Dev",
+      text: "Front-end Dev",
+      value: "Front-end Dev",
+      name: "Front-end Dev",
+    },
+    {
+      key: "Back-end Dev",
+      text: "Back-end Dev",
+      value: "Back-end Dev",
+      name: "Back-end Dev",
+    },
+    { key: "DevOps", text: "DevOps", value: "DevOps", name: "DevOps" },
+  ];
 
   const [isRemote, setIsRemote] = useState(false);
 
@@ -52,6 +52,7 @@ const jobOptions: JobOption[] = [
     date: "",
     location: "",
     salary: "",
+    company: "",
   });
 
   useEffect(() => {

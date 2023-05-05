@@ -6,4 +6,5 @@ export interface Job {
     date: string;
     location: string;
     salary: string;
+    company: string;
 }
