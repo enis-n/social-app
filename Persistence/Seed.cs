@@ -12,9 +12,11 @@ namespace Persistence
         {
             await SeedPosts(context);
             await SeedStories(context);
+            await SeedJobs(context);
         }
 
-        public static async Task SeedPosts(DataContext context){
+        public static async Task SeedPosts(DataContext context)
+        {
             if (context.Posts.Any()) return;
 
             var posts = new List<Post>
@@ -105,9 +107,10 @@ namespace Persistence
             await context.SaveChangesAsync();
         }
 
-        public static async Task SeedStories(DataContext context){
-         
-            if(context.Stories.Any()) return;
+        public static async Task SeedStories(DataContext context)
+        {
+
+            if (context.Stories.Any()) return;
 
             var stories = new List<Story>
             {
@@ -122,5 +125,24 @@ namespace Persistence
             await context.Stories.AddRangeAsync(stories);
             await context.SaveChangesAsync();
         }
+
+        public static async Task SeedJobs(DataContext context)
+        {
+            if (context.Jobs.Any()) return;
+
+            var jobs = new List<Job>
+            {
+                // id = "123",
+                Title = "Senior NodeJS Developer",
+                Description = "We are seeking a talented NodeJS developer to join our team...",
+                Category = "Information Technology",
+                Date = "2022-06-01",
+                Location = "New York City",
+                Salary = "80000-100000",
+                Company = "ABC Company"
+            }
+
+
+    }
     }
 }
