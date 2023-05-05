@@ -5,12 +5,12 @@ namespace Domain
     public class Job
     {
         public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Category { get; set; }
+        public String Title { get; set; }
+        public String Description { get; set; }
+        public String Category { get; set; }
         public DateTime Date { get; set; }
-        public string Location { get; set; }
-        public float Salary { get; set; }
-        public string Company { get; set; }
+        public String Location { get; set; }
+        public String Salary { get; set; }
+        public String Company { get; set; }
     }
 }

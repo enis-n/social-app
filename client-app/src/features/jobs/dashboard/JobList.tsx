@@ -5,8 +5,8 @@ import JobListItem from "./JobListItem";
 import { Header } from "semantic-ui-react";
 
 export default observer(function JobList() {
-  // const { jobStore } = useStore();
-  // const { groupedJobs } = jobStore;
+  const { jobStore } = useStore();
+  const { groupedJobs } = jobStore;
 
   // Sample job object
   const sampleJob = {
@@ -47,22 +47,22 @@ export default observer(function JobList() {
     },
   ];
   return (
-    // <>
-    //   {groupedJobs.map(([group, jobs]) => (
-    //     <Fragment key={group}>
-    //       <Header sub color="teal">
-    //         {group}
-    //       </Header>
-    //       {jobs.map((job) => (
-    //         <JobListItem key={job.id} job={job} />
-    //       ))}
-    //     </Fragment>
-    //   ))}
-    // </>
     <>
-      {jobArray.map((job) => (
-        <JobListItem key={job.id} job={job} />
+      {groupedJobs.map(([group, jobs]) => (
+        <Fragment key={group}>
+          <Header sub color="teal">
+            {group}
+          </Header>
+          {jobs.map((job) => (
+            <JobListItem key={job.id} job={job} />
+          ))}
+        </Fragment>
       ))}
     </>
+    // <>
+    //   {jobArray.map((job) => (
+    //     <JobListItem key={job.id} job={job} />
+    //   ))}
+    // </>
   );
 });

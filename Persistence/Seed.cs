@@ -131,18 +131,21 @@ namespace Persistence
             if (context.Jobs.Any()) return;
 
             var jobs = new List<Job>
-            {
-                // id = "123",
-                Title = "Senior NodeJS Developer",
-                Description = "We are seeking a talented NodeJS developer to join our team...",
-                Category = "Information Technology",
-                Date = "2022-06-01",
-                Location = "New York City",
-                Salary = "80000-100000",
-                Company = "ABC Company"
-            }
+    {
+        new Job
+        {
+            Title = "Senior NodeJS Developer",
+            Description = "We are seeking a talented NodeJS developer to join our team...",
+            Category = "Information Technology",
+            Date = DateTime.Now.AddMonths(7),
+            Location = "New York City",
+            Salary = "853.09",
+            Company = "ABC Company"
+        }
+    };
 
-
-    }
+            await context.Jobs.AddRangeAsync(jobs);
+            await context.SaveChangesAsync();
+        }
     }
 }
