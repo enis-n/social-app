@@ -1,12 +1,15 @@
 import { createContext, useContext } from "react";
 import PostStore from "./postStore";
+import CommonStore from "./commonStore";
 
 interface Store {
-    postStore: PostStore
+    postStore: PostStore;
+    commonStore: CommonStore;
 }
 
 export const store: Store = {
-    postStore: new PostStore()
+    postStore: new PostStore(),
+    commonStore: new CommonStore()
 }
 
 export const StoreContext = createContext(store);
