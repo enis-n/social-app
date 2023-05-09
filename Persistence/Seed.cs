@@ -10,6 +10,11 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context)
         {
+            await SeedPosts(context);
+            await SeedStories(context);
+        }
+
+        public static async Task SeedPosts(DataContext context){
             if (context.Posts.Any()) return;
 
             var posts = new List<Post>
@@ -97,6 +102,24 @@ namespace Persistence
             };
 
             await context.Posts.AddRangeAsync(posts);
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedStories(DataContext context){
+         
+            if(context.Stories.Any()) return;
+
+            var stories = new List<Story>
+            {
+                new Story
+                {
+                    Username = "filani420",
+                    Caption = "Hello world",
+                    ImageUrl = "https://plus.unsplash.com/premium_photo-1669986386171-5f54aee0a73b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+                }
+            };
+
+            await context.Stories.AddRangeAsync(stories);
             await context.SaveChangesAsync();
         }
     }
