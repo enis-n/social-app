@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Icon, Item, Segment } from 'semantic-ui-react'
 import { Post } from '../../../app/models/post'
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 interface Props {
     post: Post;
@@ -25,7 +26,7 @@ export default function PostListItem({ post }: Props) {
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock' /> {post.date}
+                    <Icon name='clock' /> {format(post.date!, 'dd MMM yyyy h:mm aa')}
                     <Icon name='marker' /> {post.venue}
                 </span>
             </Segment>

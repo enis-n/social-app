@@ -1,13 +1,14 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Post } from "../models/post";
 import agent from "../api/agent";
+import { format } from "date-fns";
 
 export default class PostStore {
     postRegistry = new Map<string, Post>();
     selectedPost: Post | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -15,13 +16,13 @@ export default class PostStore {
 
     get postsByDate() {
         return Array.from(this.postRegistry.values()).sort((a, b) =>
-            Date.parse(a.date) - Date.parse(b.date));
+            a.date!.getTime() - b.date!.getTime());
     }
 
     get groupedPosts() {
         return Object.entries(
             this.postsByDate.reduce((posts, post) => {
-                const date = post.date;
+                const date = format(post.date!, 'dd MMM yyyy');
                 posts[date] = posts[date] ? [...posts[date], post] : [post]
                 return posts;
             }, {} as { [key: string]: Post[] })
@@ -66,7 +67,7 @@ export default class PostStore {
     }
 
     private setPost = (post: Post) => {
-        post.date = post.date.split('T')[0];
+        post.date = new Date(post.date!);
         this.postRegistry.set(post.id, post);
     }
 

@@ -2,6 +2,8 @@ import { observer } from 'mobx-react-lite';
 import React from 'react'
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
 import { Post } from '../../../app/models/post';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 
 const postImageStyle = {
@@ -35,7 +37,7 @@ export default observer(function ActivityDetailedHeader({ post }: Props) {
                                     content={post.title}
                                     style={{ color: 'white' }}
                                 />
-                                <p>{post.date}</p>
+                                <p>{format(post.date!, 'dd MMM yyyy')}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>
@@ -47,7 +49,7 @@ export default observer(function ActivityDetailedHeader({ post }: Props) {
             <Segment clearing attached='bottom'>
                 <Button color='teal'>Join Activity</Button>
                 <Button>Cancel attendance</Button>
-                <Button color='orange' floated='right'>
+                <Button as={Link} to={`/manage/${post.id}`} color='orange' floated='right'>
                     Manage Event
                 </Button>
             </Segment>
