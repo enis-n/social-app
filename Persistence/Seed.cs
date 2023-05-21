@@ -11,13 +11,13 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            if(!userManager.Users.Any())
+            if (!userManager.Users.Any())
             {
                 var users = new List<AppUser>
                 {
                     new AppUser{DisplayName = "filani", UserName = "filani420", Email = "filani@test.com"},
                     new AppUser{DisplayName = "eli", UserName = "eli420", Email = "eli@test.com"},
-                    new AppUser{DisplayName = "enisi", UserName = "enisi420", Email = "enisi@test.com"},
+                    new AppUser{DisplayName = "enis", UserName = "enisi420", Email = "enisi@test.com"},
                 };
 
                 foreach (var user in users)
@@ -29,7 +29,8 @@ namespace Persistence
             await SeedStories(context);
         }
 
-        public static async Task SeedPosts(DataContext context){
+        public static async Task SeedPosts(DataContext context)
+        {
             if (context.Posts.Any()) return;
 
             var posts = new List<Post>
@@ -120,9 +121,10 @@ namespace Persistence
             await context.SaveChangesAsync();
         }
 
-        public static async Task SeedStories(DataContext context){
-         
-            if(context.Stories.Any()) return;
+        public static async Task SeedStories(DataContext context)
+        {
+
+            if (context.Stories.Any()) return;
 
             var stories = new List<Story>
             {

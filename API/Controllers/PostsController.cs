@@ -1,14 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Posts;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     public class PostsController : BaseApiController
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {

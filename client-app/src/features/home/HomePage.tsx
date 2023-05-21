@@ -11,8 +11,8 @@ export default function HomePage() {
                     UBT Social Media App
                 </Header>
                 <Header as='h2' inverted content='Welcome to our app' />
-                <Button as={Link} to='/posts' size='huge' inverted>
-                    Take to the app
+                <Button as={Link} to='/login' size='huge' inverted>
+                    Login
                 </Button>
             </Container>
         </Segment>
