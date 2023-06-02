@@ -11,6 +11,8 @@ namespace Domain
         public String Username { get; set; }
         public String Caption { get; set; }
         public String ImageUrl { get; set; }
+        public DateTime DateCreated { get; set; }
+        public ICollection<StoryAttendee> Attendees { get; set; }
 
     }
 }
