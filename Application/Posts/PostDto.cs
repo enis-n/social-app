@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Application.Profiles;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Domain
+namespace Application.Posts
 {
-    public class Post
+    public class PostDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -11,7 +14,8 @@ namespace Domain
         public string Description { get; set; }
         public string Category { get; set; }
         public string Venue { get; set; }
+        public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
-        public ICollection<PostAttendee> Attendees { get; set; } = new List<PostAttendee>();
+        public ICollection<Profile> Attendees { get; set; }
     }
 }

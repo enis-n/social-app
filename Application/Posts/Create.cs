@@ -1,9 +1,12 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Posts
@@ -26,13 +29,27 @@ namespace Application.Posts
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => 
+                x.UserName == _userAccessor.GetUsername());
+
+                var attendee = new PostAttendee
+                {
+                    AppUser = user,
+                    Post = request.Post,
+                    isHost = true
+                };
+
+                request.Post.Attendees.Add(attendee);
+
                 _context.Posts.Add(request.Post);
 
                 var result = await _context.SaveChangesAsync() > 0;
