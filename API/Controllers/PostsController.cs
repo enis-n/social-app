@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Posts;
 using Domain;
@@ -10,6 +9,7 @@ namespace API.Controllers
 {
     public class PostsController : BaseApiController
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {

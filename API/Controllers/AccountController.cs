@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace API.Controllers
-{   
+{
     [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
@@ -34,11 +34,11 @@ namespace API.Controllers
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
 
-            if(user == null) return Unauthorized();
+            if (user == null) return Unauthorized();
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 return CreateUserObject(user);
             }
@@ -49,13 +49,15 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("Email taken");
+                ModelState.AddModelError("email", "Email Taken");
+                return ValidationProblem();
             }
-            if(await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Username taken");
+                ModelState.AddModelError("username", "Username taken");
+                return ValidationProblem();
             }
 
             var user = new AppUser
@@ -67,7 +69,7 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 return CreateUserObject(user);
             }
@@ -85,7 +87,7 @@ namespace API.Controllers
             return CreateUserObject(user);
         }
 
-        
+
 
         private UserDto CreateUserObject(AppUser user)
         {

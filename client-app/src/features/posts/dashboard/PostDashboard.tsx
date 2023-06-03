@@ -14,7 +14,7 @@ export default observer(function PostDashboard() {
         if (postRegistry.size <= 1) loadPosts();
     }, [postRegistry.size, loadPosts])
 
-    if (postStore.loadingInitial) return <LoadingComponent content='Loading App' />
+    if (postStore.loadingInitial) return <LoadingComponent content='Loading Posts' />
 
 
     return (
