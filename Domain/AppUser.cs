@@ -11,5 +11,6 @@ namespace Domain
         public string Bio { get; set; }
         public ICollection<PostAttendee> Posts { get; set; }
         public ICollection<StoryAttendee> Stories { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }
