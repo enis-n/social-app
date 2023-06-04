@@ -41,12 +41,7 @@ namespace Persistence
                                     AppUser = users[2],
                                     isHost = true
                                 },
-                                new PostAttendee
-                                {
-                                    AppUser = users[1],
-                                    isHost = false
-                                }
-                            }
+                           }
                     },
                     new Post
                     {
@@ -85,7 +80,7 @@ namespace Persistence
                                 },
                                 new PostAttendee
                                 {
-                                    AppUser = users[0],
+                                    AppUser = users[2],
                                     isHost = false
                                 }
                             }
@@ -106,7 +101,7 @@ namespace Persistence
                                 },
                                 new PostAttendee
                                 {
-                                    AppUser = users[0],
+                                    AppUser = users[2],
                                     isHost = false
                                 }
                             }
@@ -128,6 +123,11 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[0],
+                                    isHost = false
+                                },
+                                new PostAttendee
+                                {
+                                    AppUser = users[1],
                                     isHost = false
                                 }
                             }
