@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Post } from "../models/post";
+import { Post, PostFormValues } from "../models/post";
 import { toast } from "react-toastify";
 import { history } from "../..";
 import { store } from "../stores/store";
@@ -68,8 +68,8 @@ const request = {
 const Posts = {
     list: () => request.get<Post[]>('/posts'),
     details: (id: string) => request.get<Post>(`/posts/${id}`),
-    create: (post: Post) => request.post<void>('/posts', post),
-    update: (post: Post) => request.put<void>(`/posts/${post.id}`, post),
+    create: (post: PostFormValues) => request.post<void>('/posts', post),
+    update: (post: PostFormValues) => request.put<void>(`/posts/${post.id}`, post),
     delete: (id: string) => request.del<void>(`/posts/${id}`),
     attend: (id: string) => request.post<void>(`/posts/${id}/attend`, {})
 }

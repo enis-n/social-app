@@ -12,7 +12,7 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Post } from '../../../app/models/post';
+import { Post, PostFormValues } from '../../../app/models/post';
 
 export default observer(function PostForm() {
     const history = useHistory();
@@ -20,14 +20,7 @@ export default observer(function PostForm() {
     const { createPost, updatePost, loading, loadPost, loadingInitial } = postStore;
     const { id } = useParams<{ id: string }>();
 
-    const [post, setPost] = useState<Post>({
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: null,
-        venue: ''
-    });
+    const [post, setPost] = useState<PostFormValues>(new PostFormValues);
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The post title is required'),
@@ -38,11 +31,11 @@ export default observer(function PostForm() {
     })
 
     useEffect(() => {
-        if (id) loadPost(id).then(post => setPost(post!));
+        if (id) loadPost(id).then(post => setPost(new PostFormValues(post)));
     }, [id, loadPost]);
 
-    function handleFormSubmit(post: Post) {
-        if (post.id.length === 0) {
+    function handleFormSubmit(post: PostFormValues) {
+        if (!post.id) {
             let newPost = {
                 ...post,
                 id: uuid()
@@ -79,7 +72,7 @@ export default observer(function PostForm() {
                         <MyTextInput placeholder='Venue' name='venue' />
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
-                            loading={loading}
+                            loading={isSubmitting}
                             floated='right'
                             positive
                             type='submit'

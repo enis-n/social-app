@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Post } from "../models/post";
+import { Post, PostFormValues } from "../models/post";
 import agent from "../api/agent";
 import { format } from "date-fns";
 import { store } from "./store";
@@ -89,39 +89,35 @@ export default class PostStore {
         this.loadingInitial = state;
     }
 
-    createPost = async (post: Post) => {
-        this.loading = true;
+    createPost = async (post: PostFormValues) => {
+        const user = store.userStore.user;
+        const attendee = new Profile(user!);
         try {
             await agent.Posts.create(post);
+            const newPost = new Post(post);
+            newPost.hostUsername = user!.username;
+            newPost.attendees = [attendee];
+            this.setPost(newPost);
             runInAction(() => {
-                this.postRegistry.set(post.id, post);
-                this.selectedPost = post;
-                this.editMode = false;
-                this.loading = false;
+                this.selectedPost = newPost;
             })
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
         }
     }
 
-    updatePost = async (post: Post) => {
-        this.loading = true;
+    updatePost = async (post: PostFormValues) => {
         try {
             await agent.Posts.update(post);
             runInAction(() => {
-                this.postRegistry.set(post.id, post);
-                this.selectedPost = post;
-                this.editMode = false;
-                this.loading = false;
+                if (post.id) {
+                    let updatedPost = { ...this.getPost(post.id), ...post }
+                    this.postRegistry.set(post.id, updatedPost as Post);
+                    this.selectedPost = updatedPost as Post;
+                }
             })
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
         }
     }
 

@@ -15,8 +15,28 @@ export interface Post {
     attendees: Profile[];
 }
 
+export class Post implements Post {
+    constructor(init?: PostFormValues) {
+        Object.assign(this, init);
+    }
+}
+
 export class PostFormValues {
     id?: string = undefined;
     title: string = '';
+    category: string = '';
+    description: string = '';
+    date: Date | null = null;
+    venue: string = '';
 
+    constructor(post?: PostFormValues) {
+        if (post) {
+            this.id = post.id;
+            this.title = post.title;
+            this.category = post.category;
+            this.description = post.description;
+            this.date = post.date;
+            this.venue = post.venue;
+        }
+    }
 }
