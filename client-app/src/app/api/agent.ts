@@ -68,9 +68,10 @@ const request = {
 const Posts = {
     list: () => request.get<Post[]>('/posts'),
     details: (id: string) => request.get<Post>(`/posts/${id}`),
-    create: (post: Post) => axios.post<void>('/posts', post),
-    update: (post: Post) => axios.put<void>(`/posts/${post.id}`, post),
-    delete: (id: string) => axios.delete<void>(`/posts/${id}`)
+    create: (post: Post) => request.post<void>('/posts', post),
+    update: (post: Post) => request.put<void>(`/posts/${post.id}`, post),
+    delete: (id: string) => request.del<void>(`/posts/${id}`),
+    attend: (id: string) => request.post<void>(`/posts/${id}/attend`, {})
 }
 
 const Account = {

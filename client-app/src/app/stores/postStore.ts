@@ -2,6 +2,8 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { Post } from "../models/post";
 import agent from "../api/agent";
 import { format } from "date-fns";
+import { store } from "./store";
+import { Profile } from "../models/profile";
 
 export default class PostStore {
     postRegistry = new Map<string, Post>();
@@ -67,6 +69,14 @@ export default class PostStore {
     }
 
     private setPost = (post: Post) => {
+        const user = store.userStore.user;
+        if (user) {
+            post.isGoing = post.attendees!.some(
+                a => a.username === user.username
+            )
+            post.isHost = post.hostUsername === user.username;
+            post.host = post.attendees?.find(x => x.username === post.hostUsername);
+        }
         post.date = new Date(post.date!);
         this.postRegistry.set(post.id, post);
     }
@@ -128,6 +138,29 @@ export default class PostStore {
             runInAction(() => {
                 this.loading = false;
             })
+        }
+    }
+
+    updateAttendance = async () => {
+        const user = store.userStore.user;
+        this.loading = true;
+        try {
+            await agent.Posts.attend(this.selectedPost!.id);
+            runInAction(() => {
+                if (this.selectedPost?.isGoing) {
+                    this.selectedPost.attendees = this.selectedPost.attendees?.filter(a => a.username !== user?.username);
+                    this.selectedPost.isGoing = false;
+                } else {
+                    const attendee = new Profile(user!);
+                    this.selectedPost?.attendees?.push(attendee);
+                    this.selectedPost!.isGoing = true;
+                }
+                this.postRegistry.set(this.selectedPost!.id, this.selectedPost!);
+            })
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false)
         }
     }
 }
