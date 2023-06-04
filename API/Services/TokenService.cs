@@ -15,7 +15,7 @@ namespace API.Services
         private readonly IConfiguration _config;
         public TokenService(IConfiguration config)
         {
-            this._config = config;
+            _config = config;
         }
 
         public string CreateToken(AppUser user)

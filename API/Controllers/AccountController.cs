@@ -24,9 +24,9 @@ namespace API.Controllers
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, TokenService tokenService)
         {
-            this._tokenService = tokenService;
-            this._signInManager = signInManager;
-            this._userManager = userManager;
+            _tokenService = tokenService;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpPost("login")]
