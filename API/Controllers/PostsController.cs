@@ -9,7 +9,6 @@ namespace API.Controllers
 {
     public class PostsController : BaseApiController
     {
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
@@ -36,6 +35,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Edit.Command { Post = post }));
         }
 
+        [Authorize(Policy = "IsPostHost")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {

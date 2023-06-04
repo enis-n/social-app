@@ -38,7 +38,7 @@ namespace Persistence
                             {
                                 new PostAttendee
                                 {
-                                    AppUser = users[0],
+                                    AppUser = users[2],
                                     isHost = true
                                 },
                                 new PostAttendee
@@ -59,12 +59,12 @@ namespace Persistence
                             {
                                 new PostAttendee
                                 {
-                                    AppUser = users[0],
+                                    AppUser = users[2],
                                     isHost = true
                                 },
                                 new PostAttendee
                                 {
-                                    AppUser = users[2],
+                                    AppUser = users[1],
                                     isHost = false
                                 }
                             }
@@ -122,7 +122,7 @@ namespace Persistence
                             {
                                 new PostAttendee
                                 {
-                                    AppUser = users[1],
+                                    AppUser = users[2],
                                     isHost = true
                                 },
                                 new PostAttendee
@@ -215,7 +215,7 @@ namespace Persistence
             await SeedStories(context);
         }
 
-       
+
         public static async Task SeedStories(DataContext context)
         {
 

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Application.Profiles;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Application.Posts
 {
