@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react'
-import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
+import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react'
 import { Post } from '../../../app/models/post';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
@@ -25,10 +25,18 @@ interface Props {
 }
 
 export default observer(function ActivityDetailedHeader({ post }: Props) {
-    const { postStore: { updateAttendance, loading } } = useStore();
+    const { postStore: { updateAttendance, loading, cancelPostToggle } } = useStore();
     return (
         <Segment.Group>
             <Segment basic attached='top' style={{ padding: '0' }}>
+                {post.isCancelled &&
+                    <Label
+                        style={{ position: 'absolute', zIndex: 1000, left: -14, top: 20 }}
+                        ribbon
+                        color='red'
+                        content='Cancelled'
+                    />
+                }
                 <Image src={`/assets/categoryImages/${post.category}.jpg`} fluid style={postImageStyle} />
                 <Segment style={postImageTextStyle} basic>
                     <Item.Group>
@@ -52,13 +60,32 @@ export default observer(function ActivityDetailedHeader({ post }: Props) {
             </Segment>
             <Segment clearing attached='bottom'>
                 {post.isHost ? (
-                    <Button as={Link} to={`/manage/${post.id}`} color='orange' floated='right'>
-                        Manage Event
-                    </Button>
+                    <>
+                        <Button
+                            color={post.isCancelled ? 'green' : 'red'}
+                            floated='left'
+                            basic
+                            content={post.isCancelled ? 'Re-activate Post' : 'Cancel Post'}
+                            onClick={cancelPostToggle}
+                            loading={loading}
+                        />
+                        <Button
+                            disabled={post.isCancelled}
+                            as={Link}
+                            to={`/manage/${post.id}`}
+                            color='orange'
+                            floated='right'>
+                            Manage Event
+                        </Button>
+                    </>
                 ) : post.isGoing ? (
                     <Button loading={loading} onClick={updateAttendance} >Cancel attendance</Button>
                 ) : (
-                    <Button loading={loading} onClick={updateAttendance} color='teal'>Join Event</Button>
+                    <Button
+                        disabled={post.isCancelled}
+                        loading={loading}
+                        onClick={updateAttendance}
+                        color='teal'>Join Event</Button>
                 )}
             </Segment>
         </Segment.Group>

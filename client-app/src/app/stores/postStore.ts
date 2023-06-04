@@ -159,4 +159,19 @@ export default class PostStore {
             runInAction(() => this.loading = false)
         }
     }
+
+    cancelPostToggle = async () => {
+        this.loading = true;
+        try {
+            await agent.Posts.attend(this.selectedPost!.id);
+            runInAction(() => {
+                this.selectedPost!.isCancelled = !this.selectedPost!.isCancelled;
+                this.postRegistry.set(this.selectedPost!.id, this.selectedPost!);
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            runInAction(() => this.loading = false)
+        }
+    }
 }

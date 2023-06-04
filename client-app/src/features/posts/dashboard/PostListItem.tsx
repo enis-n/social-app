@@ -13,6 +13,9 @@ export default function PostListItem({ post }: Props) {
     return (
         <Segment.Group>
             <Segment>
+                {post.isCancelled &&
+                    <Label attached='top' color='red' content='Cancelled' style={{ textAlign: 'center' }} />
+                }
                 <Item.Group>
                     <Item>
                         <Item.Image size='tiny' circular src='/assets/user.png' />
