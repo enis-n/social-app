@@ -12,15 +12,15 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Post, PostFormValues } from '../../../app/models/post';
+import { PostFormValues } from '../../../app/models/post';
 
 export default observer(function PostForm() {
     const history = useHistory();
     const { postStore } = useStore();
-    const { createPost, updatePost, loading, loadPost, loadingInitial } = postStore;
+    const { createPost, updatePost, loadPost, loadingInitial } = postStore;
     const { id } = useParams<{ id: string }>();
 
-    const [post, setPost] = useState<PostFormValues>(new PostFormValues);
+    const [post, setPost] = useState<PostFormValues>(new PostFormValues());
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The post title is required'),

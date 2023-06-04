@@ -18,7 +18,7 @@ export default function PostListItem({ post }: Props) {
                 }
                 <Item.Group>
                     <Item>
-                        <Item.Image size='tiny' circular src='/assets/user.png' />
+                        <Item.Image style={{ marginBottom: 4 }} size='tiny' circular src='/assets/user.png' />
                         <Item.Content>
                             <Item.Header as={Link} to={`/posts/${post.id}`}>
                                 {post.title}
