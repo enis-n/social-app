@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Icon, Item, Segment } from 'semantic-ui-react'
+import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react'
 import { Post } from '../../../app/models/post'
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import PostListItemAttendee from './PostListItemAttendee';
 
 interface Props {
     post: Post;
@@ -19,7 +20,17 @@ export default function PostListItem({ post }: Props) {
                             <Item.Header as={Link} to={`/posts/${post.id}`}>
                                 {post.title}
                             </Item.Header>
-                            <Item.Description>Hosted by Bob</Item.Description>
+                            <Item.Description>Hosted by {post.host?.displayName}</Item.Description>
+                            {post.isHost && (
+                                <Item.Description>
+                                    <Label basic color='orange'>You are the host of this event</Label>
+                                </Item.Description>
+                            )}
+                            {post.isGoing && !post.isHost && (
+                                <Item.Description>
+                                    <Label basic color='green'>You are going to this event</Label>
+                                </Item.Description>
+                            )}
                         </Item.Content>
                     </Item>
                 </Item.Group>
@@ -31,7 +42,9 @@ export default function PostListItem({ post }: Props) {
                 </span>
             </Segment>
             <Segment secondary>
-                Attendees go here
+                <PostListItemAttendee
+                    attendees={post.attendees!}
+                />
             </Segment>
             <Segment clearing>
                 <span>{post.description}</span>

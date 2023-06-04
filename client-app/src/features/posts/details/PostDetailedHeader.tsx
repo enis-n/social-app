@@ -4,6 +4,7 @@ import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
 import { Post } from '../../../app/models/post';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { useStore } from '../../../app/stores/store';
 
 
 const postImageStyle = {
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default observer(function ActivityDetailedHeader({ post }: Props) {
+    const { postStore: { updateAttendance, loading } } = useStore();
     return (
         <Segment.Group>
             <Segment basic attached='top' style={{ padding: '0' }}>
@@ -39,7 +41,9 @@ export default observer(function ActivityDetailedHeader({ post }: Props) {
                                 />
                                 <p>{format(post.date!, 'dd MMM yyyy')}</p>
                                 <p>
-                                    Hosted by <strong>Bob</strong>
+                                    Hosted by <strong>
+                                        <Link to={`/profiles/${post.host?.username}`} >{post.host?.displayName}</Link>
+                                    </strong>
                                 </p>
                             </Item.Content>
                         </Item>
@@ -47,11 +51,15 @@ export default observer(function ActivityDetailedHeader({ post }: Props) {
                 </Segment>
             </Segment>
             <Segment clearing attached='bottom'>
-                <Button color='teal'>Join Activity</Button>
-                <Button>Cancel attendance</Button>
-                <Button as={Link} to={`/manage/${post.id}`} color='orange' floated='right'>
-                    Manage Event
-                </Button>
+                {post.isHost ? (
+                    <Button as={Link} to={`/manage/${post.id}`} color='orange' floated='right'>
+                        Manage Event
+                    </Button>
+                ) : post.isGoing ? (
+                    <Button loading={loading} onClick={updateAttendance} >Cancel attendance</Button>
+                ) : (
+                    <Button loading={loading} onClick={updateAttendance} color='teal'>Join Event</Button>
+                )}
             </Segment>
         </Segment.Group>
     )
