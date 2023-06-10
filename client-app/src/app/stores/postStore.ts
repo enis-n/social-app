@@ -174,4 +174,8 @@ export default class PostStore {
             runInAction(() => this.loading = false)
         }
     }
+
+    clearSelectedPost = async () => {
+        this.selectedPost = undefined;
+    }
 }

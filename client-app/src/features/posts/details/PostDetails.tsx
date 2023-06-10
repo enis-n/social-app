@@ -11,12 +11,23 @@ import PostDetailedSidebar from './PostDetailedSidebar';
 
 export default observer(function PostDetails() {
     const { postStore } = useStore();
-    const { selectedPost: post, loadPost, loadingInitial } = postStore;
+    const { selectedPost: post, loadPost, loadingInitial, clearSelectedPost } = postStore;
     const { id } = useParams<{ id: string }>();
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (id) loadPost(id);
-    }, [id, loadPost]);
+        return () => clearSelectedPost();
+    }, [id, loadPost, clearSelectedPost]);
+ */
+    useEffect(() => {
+        if (id) {
+            loadPost(id);
+        }
+        return () => {
+            clearSelectedPost();
+        };
+    }, [id, loadPost, clearSelectedPost]);
+
 
     if (loadingInitial || !post) return <LoadingComponent content={''} />;
 
