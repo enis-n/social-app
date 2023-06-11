@@ -12,5 +12,7 @@ namespace Domain
         public ICollection<PostAttendee> Posts { get; set; }
         public ICollection<StoryAttendee> Stories { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<UserFollowing> Followings { get; set; }
+        public ICollection<UserFollowing> Followers { get; set; }
     }
 }
