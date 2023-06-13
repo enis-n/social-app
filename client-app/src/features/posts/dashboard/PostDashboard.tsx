@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid } from 'semantic-ui-react';
+import { Grid, Loader } from 'semantic-ui-react';
 import PostList from './PostList';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import PostFilters from './PostFilters';
 import { PagingParams } from '../../../app/models/pagination';
+import InfiniteScroll from 'react-infinite-scroller';
 
 export default observer(function PostDashboard() {
     const { postStore } = useStore();
@@ -28,18 +29,20 @@ export default observer(function PostDashboard() {
     return (
         <Grid>
             <Grid.Column width='10'>
-                <PostList />
-                <Button
-                    floated='right'
-                    content='More...'
-                    positive
-                    onClick={handleGetNext}
-                    loading={loadingNext}
-                    disabled={pagination?.totalPages === pagination?.currentPage}
-                />
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={handleGetNext}
+                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                    initialLoad={false}
+                >
+                    <PostList />
+                </InfiniteScroll>
             </Grid.Column>
             <Grid.Column width='6'>
                 <PostFilters />
+            </Grid.Column>
+            <Grid.Column width={10} >
+                <Loader active={loadingNext} />
             </Grid.Column>
         </Grid>
     )
