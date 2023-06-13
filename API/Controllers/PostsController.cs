@@ -11,7 +11,7 @@ namespace API.Controllers
     public class PostsController : BaseApiController
     {
         [HttpGet]
-        public async Task<IActionResult> GetPosts([FromQuery] PagingParams param)
+        public async Task<IActionResult> GetPosts([FromQuery] PostParams param)
         {
             return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }

@@ -7,6 +7,7 @@ import LoadingComponent from '../../../app/layout/LoadingComponent';
 import PostFilters from './PostFilters';
 import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
+import PostListItemPlaceholder from './PostListItemPlaceholder';
 
 export default observer(function PostDashboard() {
     const { postStore } = useStore();
@@ -23,20 +24,24 @@ export default observer(function PostDashboard() {
         if (postRegistry.size <= 1) loadPosts();
     }, [postRegistry.size, loadPosts])
 
-    if (postStore.loadingInitial && !loadingNext) return <LoadingComponent content='Loading Posts' />
-
-
     return (
         <Grid>
             <Grid.Column width='10'>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={handleGetNext}
-                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
-                    initialLoad={false}
-                >
-                    <PostList />
-                </InfiniteScroll>
+                {postStore.loadingInitial && !loadingNext ? (
+                    <>
+                        <PostListItemPlaceholder />
+                        <PostListItemPlaceholder />
+                    </>
+                ) : (
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={handleGetNext}
+                        hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                        initialLoad={false}
+                    >
+                        <PostList />
+                    </InfiniteScroll>
+                )}
             </Grid.Column>
             <Grid.Column width='6'>
                 <PostFilters />
