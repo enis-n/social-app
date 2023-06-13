@@ -5,6 +5,7 @@ import { history } from "../..";
 import { store } from "../stores/store";
 import { User, UserFromValues } from "../models/user";
 import { Photo, Profile } from "../models/profile";
+import { PaginatedResult } from "../models/pagination";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -22,6 +23,11 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async response => {
     await sleep(1000);
+    const pagination = response.headers['pagination'];
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginatedResult<any>>
+    }
     return response;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response! as AxiosResponse;
@@ -67,7 +73,8 @@ const request = {
 }
 
 const Posts = {
-    list: () => request.get<Post[]>('/posts'),
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<Post[]>>('/posts', { params })
+        .then(responseBody),
     details: (id: string) => request.get<Post>(`/posts/${id}`),
     create: (post: PostFormValues) => request.post<void>('/posts', post),
     update: (post: PostFormValues) => request.put<void>(`/posts/${post.id}`, post),

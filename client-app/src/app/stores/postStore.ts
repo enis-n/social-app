@@ -4,6 +4,7 @@ import agent from "../api/agent";
 import { format } from "date-fns";
 import { store } from "./store";
 import { Profile } from "../models/profile";
+import { Pagination, PagingParams } from "../models/pagination";
 
 export default class PostStore {
     postRegistry = new Map<string, Post>();
@@ -11,9 +12,22 @@ export default class PostStore {
     editMode = false;
     loading = false;
     loadingInitial = false;
+    pagination: Pagination | null = null;
+    pagingParams = new PagingParams();
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams();
+        params.append('pageNumber', this.pagingParams.pageNumber.toString());
+        params.append('pageSize', this.pagingParams.pageSize.toString());
+        return params;
     }
 
     get postsByDate() {
@@ -35,15 +49,20 @@ export default class PostStore {
     loadPosts = async () => {
         this.loadingInitial = true;
         try {
-            const posts = await agent.Posts.list();
-            posts.forEach(post => {
+            const result = await agent.Posts.list(this.axiosParams);
+            result.data.forEach(post => {
                 this.setPost(post);
             })
+            this.setPagination(result.pagination);
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     }
 
     loadPost = async (id: string) => {
