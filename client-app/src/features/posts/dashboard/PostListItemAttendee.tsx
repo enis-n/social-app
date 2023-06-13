@@ -13,7 +13,7 @@ export default observer(function PostListItemAttendee({ attendees }: Props) {
 
     const styles = {
         borderColor: 'orange',
-        borderWidth: 2
+        borderWidth: 3
     }
 
     return (

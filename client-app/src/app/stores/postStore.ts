@@ -178,4 +178,15 @@ export default class PostStore {
     clearSelectedPost = async () => {
         this.selectedPost = undefined;
     }
+
+    updateAttendeeFollowing = (username: string) => {
+        this.postRegistry.forEach(post => {
+            post.attendees.forEach(attendee => {
+                if (attendee.username === username) {
+                    attendee.following ? attendee.followersCount-- : attendee.followersCount++
+                    attendee.following = !attendee.following;
+                }
+            })
+        })
+    }
 }
