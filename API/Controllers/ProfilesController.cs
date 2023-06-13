@@ -18,5 +18,12 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(command));
         }
+
+        [HttpGet("{username}/posts")]
+        public async Task<IActionResult> GetUserPosts(string username, string predicate)
+        {
+            return HandleResult(await Mediator.Send(new ListPost.Query
+            { Username = username, Predicate = predicate }));
+        }
     }
 }

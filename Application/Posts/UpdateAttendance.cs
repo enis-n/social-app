@@ -21,8 +21,8 @@ namespace Application.Posts
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
-        private readonly DataContext _context;
-        private readonly IUserAccessor _userAccessor;
+            private readonly DataContext _context;
+            private readonly IUserAccessor _userAccessor;
             public Handler(DataContext context, IUserAccessor userAccessor)
             {
                 _userAccessor = userAccessor;
@@ -35,28 +35,28 @@ namespace Application.Posts
                     .Include(a => a.Attendees).ThenInclude(u => u.AppUser)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                if(post == null) return null;
+                if (post == null) return null;
 
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
-                if(user == null) return null;
+                if (user == null) return null;
 
-                var hostUsername = post.Attendees.FirstOrDefault(x => x.isHost)?.AppUser?.UserName;
+                var hostUsername = post.Attendees.FirstOrDefault(x => x.IsHost)?.AppUser?.UserName;
 
                 var attendance = post.Attendees.FirstOrDefault(x => x.AppUser.UserName == user.UserName);
 
-                if(attendance != null && hostUsername == user.UserName)
+                if (attendance != null && hostUsername == user.UserName)
                     post.IsCancelled = !post.IsCancelled;
 
-                if(attendance != null && hostUsername != user.UserName)
+                if (attendance != null && hostUsername != user.UserName)
                     post.Attendees.Remove(attendance);
 
-                if(attendance == null)
+                if (attendance == null)
                 {
                     attendance = new PostAttendee
                     {
                         AppUser = user,
                         Post = post,
-                        isHost = false
+                        IsHost = false
                     };
 
                     post.Attendees.Add(attendance);
@@ -66,7 +66,7 @@ namespace Application.Posts
 
                 return result ? Result<Unit>.Success(Unit.Value) : Result<Unit>.Failure("Problem updating attendance");
 
-                
+
             }
         }
     }

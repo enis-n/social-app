@@ -11,6 +11,6 @@ namespace Domain
         public AppUser AppUser { get; set; }
         public Guid PostId { get; set; }
         public Post Post { get; set; }
-        public bool isHost { get; set; }
+        public bool IsHost { get; set; }
     }
 }

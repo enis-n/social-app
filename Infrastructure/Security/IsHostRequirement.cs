@@ -21,15 +21,15 @@ namespace Infrastructure.Security
         private readonly IHttpContextAccessor _httpContextAccessor;
         public IsHostRequirementHanlder(DataContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
-                _httpContextAccessor = httpContextAccessor;
-                _dbContext = dbContext;
+            _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsHostRequirement requirement)
         {
             var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if(userId == null) return Task.CompletedTask;
+            if (userId == null) return Task.CompletedTask;
 
             var postId = Guid.Parse(_httpContextAccessor.HttpContext?.Request.RouteValues
             .SingleOrDefault(x => x.Key == "id").Value?.ToString());
@@ -39,9 +39,9 @@ namespace Infrastructure.Security
             .SingleOrDefaultAsync(x => x.AppUserId == userId && x.PostId == postId)
             .Result;
 
-            if(attendee == null) return Task.CompletedTask;
+            if (attendee == null) return Task.CompletedTask;
 
-            if(attendee.isHost) context.Succeed(requirement);
+            if (attendee.IsHost) context.Succeed(requirement);
 
             return Task.CompletedTask;
 

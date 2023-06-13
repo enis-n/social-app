@@ -39,7 +39,7 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[2],
-                                    isHost = true
+                                    IsHost = true
                                 },
                            }
                     },
@@ -55,12 +55,12 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[2],
-                                    isHost = true
+                                    IsHost = true
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = false
+                                    IsHost = false
                                 }
                             }
                     },
@@ -76,12 +76,12 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = true
+                                    IsHost = true
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[2],
-                                    isHost = false
+                                    IsHost = false
                                 }
                             }
                     },
@@ -97,12 +97,12 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = true
+                                    IsHost = true
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[2],
-                                    isHost = false
+                                    IsHost = false
                                 }
                             }
                     },
@@ -118,17 +118,17 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[2],
-                                    isHost = true
+                                    IsHost = true
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[0],
-                                    isHost = false
+                                    IsHost = false
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = false
+                                    IsHost = false
                                 }
                             }
                     },
@@ -144,12 +144,12 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = true
+                                    IsHost = true
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[0],
-                                    isHost = false
+                                    IsHost = false
                                 }
                             }
                     },
@@ -165,12 +165,12 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[0],
-                                    isHost = true
+                                    IsHost = true
                                 },
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = false
+                                    IsHost = false
                                 }
                             }
                     },
@@ -186,7 +186,7 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[1],
-                                    isHost = true
+                                    IsHost = true
                                 },
                             }
                     },
@@ -202,7 +202,7 @@ namespace Persistence
                                 new PostAttendee
                                 {
                                     AppUser = users[2],
-                                    isHost = true
+                                    IsHost = true
                                 },
                             }
                     },

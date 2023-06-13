@@ -15,7 +15,7 @@ namespace Application.Core
             CreateMap<Post, Post>();
             CreateMap<Post, PostDto>()
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
-                    .FirstOrDefault(x => x.isHost).AppUser.UserName));
+                    .FirstOrDefault(x => x.IsHost).AppUser.UserName));
 
             CreateMap<PostAttendee, AttendeeDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
@@ -36,6 +36,14 @@ namespace Application.Core
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName))
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            CreateMap<PostAttendee, Profiles.UserPostDto>()
+                    .ForMember(d => d.Id, o => o.MapFrom(s => s.Post.Id))
+                    .ForMember(d => d.Date, o => o.MapFrom(s => s.Post.Date))
+                    .ForMember(d => d.Title, o => o.MapFrom(s => s.Post.Title))
+                    .ForMember(d => d.Category, o => o.MapFrom(s => s.Post.Category))
+                    .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
+                        s.Post.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
         }
     }
 }
